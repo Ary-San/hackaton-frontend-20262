@@ -81,3 +81,26 @@ export interface ApiErrorBody {
   details?: { field: string; message: string }[]
   retryAfterSeconds?: number
 }
+
+/** Respuesta paginada del servidor (GET /wanted). `page` empieza en 0. */
+export interface Page<T> {
+  content: T[]
+  totalElements: number
+  totalPages: number
+  page: number
+  size: number
+}
+
+export type WantedSort = 'bounty,desc' | 'name,asc' | 'updatedAt,desc'
+export type PageSize = 10 | 20 | 50
+
+/** Estado completo del listado /wanted. Vive en la URL. Los strings vacíos significan "sin filtro". */
+export interface WantedQuery {
+  page: number
+  size: PageSize
+  sort: WantedSort
+  status: WantedStatus | ''
+  crewId: string
+  fruit: FruitType | ''
+  q: string
+}
