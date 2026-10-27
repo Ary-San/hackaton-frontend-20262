@@ -23,6 +23,12 @@ export function Layout() {
               >
                 Se Busca
               </NavLink>
+              <NavLink
+                to="/news"
+                className={({ isActive }) => (isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200')}
+              >
+                Noticias
+              </NavLink>
             </nav>
           </div>
           <div className="flex items-center gap-3 text-sm">

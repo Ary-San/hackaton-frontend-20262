@@ -1,4 +1,4 @@
-import type { ApiErrorBody } from '../types'
+import type { ApiErrorBody, NewsDetail } from '../types'
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
 const TOKEN_KEY = 'logpose.token'
@@ -14,6 +14,7 @@ export class ApiError extends Error {
   readonly code: string
   readonly details: { field: string; message: string }[]
   readonly retryAfterSeconds?: number
+  readonly current?: NewsDetail
 
   constructor(body: ApiErrorBody) {
     super(body.message)
@@ -22,6 +23,7 @@ export class ApiError extends Error {
     this.code = body.code
     this.details = body.details ?? []
     this.retryAfterSeconds = body.retryAfterSeconds
+    this.current = body.current
   }
 }
 

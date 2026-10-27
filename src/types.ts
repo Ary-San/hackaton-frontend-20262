@@ -80,6 +80,7 @@ export interface ApiErrorBody {
   traceId?: string
   details?: { field: string; message: string }[]
   retryAfterSeconds?: number
+  current?: NewsDetail
 }
 
 /** Respuesta paginada del servidor (GET /wanted). `page` empieza en 0. */
@@ -103,4 +104,40 @@ export interface WantedQuery {
   crewId: string
   fruit: FruitType | ''
   q: string
+}
+
+export type NewsType = 'BOUNTY_UPDATE' | 'BATTLE' | 'MARINE_OPERATION' | 'WORLD_GOVERNMENT' | 'DISCOVERY'
+export type NewsPriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL'
+export type NewsStatus = 'RUMOR' | 'CONFIRMED' | 'DEBUNKED'
+
+export interface NewsItem {
+  id: string
+  type: NewsType
+  priority: NewsPriority
+  status: NewsStatus
+  title: string
+  summary: string
+  source: string
+  island: string
+  relatedWanted: { id: string; name: string } | null
+  publishedAt: string
+  updatedAt: string
+  verifiedAt: string | null
+}
+
+export interface NewsDetail extends NewsItem {
+  body: string[]
+}
+
+export interface NewsFeed {
+  items: NewsItem[]
+  nextCursor: string | null
+  hasMore: boolean
+}
+
+/** Filtros del feed /news. Viven en la URL. String vacío = sin filtro. */
+export interface NewsFilters {
+  type: NewsType | ''
+  priority: NewsPriority | ''
+  status: NewsStatus | ''
 }
